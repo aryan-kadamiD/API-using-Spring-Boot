@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JLingo | N5 Hiragana Dictionary</title>
+    <style>
+        :root {
+            --primary: #ff4b4b;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text: #2d3436;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 10px; }
+        p { color: #636e72; }
+
+        .dictionary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .word-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-bottom: 4px solid #dfe6e9;
+        }
+
+        .word-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .hiragana {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .romaji {
+            font-size: 0.9rem;
+            color: #b2bec3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .english {
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-top: 1px solid #f1f2f6;
+            padding-top: 10px;
+        }
+        .dictionary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            perspective: 1000px;
+        }
+
+        .word-card {
+            background: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .word-card:hover {
+            transform: scale(1.05) rotateX(5deg);
+            box-shadow: 0 15px 35px rgba(255, 75, 75, 0.2);
+        }
+
+        .hiragana {
+            color: #ff4b4b;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>JLingo Dictionary 🇯🇵</h1>
+    <p>Mastering 100 Basic N5 Words</p>
+</header>
+
+<div class="dictionary-grid" id="dictionary-list">
+</div>
+
+<script>
+    fetch('/dictionary')
+        .then(res => res.json())
+        .then(data => {
+            const list = document.getElementById('dictionary-list');
+            list.innerHTML = data.map(word => `
+                <div class="word-card">
+                    <span class="hiragana">${word.hiragana}</span>
+                    <span class="romaji">${word.romaji}</span>
+                    <div class="english">${word.english}</div>
+                </div>
+            `).join('');
+        })
+        .catch(err => console.error("Error loading dictionary:", err));
+</script>
+</body>
+</html>
