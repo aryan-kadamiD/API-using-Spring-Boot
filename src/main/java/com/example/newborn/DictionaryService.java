@@ -1,24 +1,31 @@
 package com.example.newborn;
 
 import org.springframework.stereotype.Service;
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference; // Use com.fasterxml
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.InputStream;
 import java.util.List;
 
 @Service
 public class DictionaryService {
+
+    private final ObjectMapper mapper = new ObjectMapper();
+
     public List<Word> getN5Dictionary() {
-        ObjectMapper mapper = new ObjectMapper();
-        TypeReference<List<Word>> typeReference = new TypeReference<List<Word>>() {
-        };
-        InputStream inputStream = TypeReference.class.getResourceAsStream("/words.json");
         try {
-            return mapper.readValue(inputStream, typeReference);
+            // Load from src/main/resources/words.json
+            InputStream inputStream = getClass().getResourceAsStream("/words.json");
+
+            if (inputStream == null) {
+                System.out.println("Error: words.json not found in resources!");
+                return List.of();
+            }
+
+            return mapper.readValue(inputStream, new TypeReference<List<Word>>() {});
         } catch (Exception e) {
-            System.out.println("Unable to load words: " + e.getMessage());
-            return List.of(); // Return empty list if file fails to load
+            e.printStackTrace(); // Log the actual error to see what's wrong
+            return List.of();
         }
     }
 }

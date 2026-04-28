@@ -76,40 +76,63 @@
             border-top: 1px solid #f1f2f6;
             padding-top: 10px;
         }
-        .dictionary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 25px;
-            padding: 20px;
-            perspective: 1000px;
+        /* Adding a smooth transition for colors */
+        .word-card {
+            border: 1px solid #eee;
+            background: linear-gradient(145deg, #ffffff, #fdfdfd);
+        }
+
+        .word-card:hover .hiragana {
+            color: #e63946; /* A slightly deeper red on hover */
+            transform: scale(1.1);
+            transition: 0.3s;
+        }
+
+        /* Subtle animation for the grid loading */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .word-card {
-            background: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeIn 0.5s ease forwards;
         }
+        // //
 
-        .word-card:hover {
-            transform: scale(1.05) rotateX(5deg);
-            box-shadow: 0 15px 35px rgba(255, 75, 75, 0.2);
-        }
+    .dictionary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    perspective: 1000px;
+}
 
-        .hiragana {
-            color: #ff4b4b;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+.word-card {
+    background: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.word-card:hover {
+    transform: scale(1.05) rotateX(5deg);
+    box-shadow: 0 15px 35px rgba(255, 75, 75, 0.2);
+}
+
+.hiragana {
+    color: #ff4b4b;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
     </style>
 </head>
 <body>
 
 <header>
-    <h1>JLingo Dictionary 🇯🇵</h1>
+    <h1>JLingo 🇯🇵</h1>
     <p>Mastering 100 Basic N5 Words</p>
 </header>
 
